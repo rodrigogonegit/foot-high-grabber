@@ -32,8 +32,8 @@ if __name__ == "__main__":
         ngolos = NGolosGrabber(args.stop)
         # footy = FootyRoomGrabber()
         # https: // www.ngolos.com / videos / 2018 - 01 - 06 - pontarlier - montpellier
-        # ngolos.grab_highlights()
-        ngolos.process_page("https://www.ngolos.com/videos/list-440")
+        ngolos.grab_highlights()
+        # ngolos.process_page("https://www.ngolos.com/videos/list-440")
 
     except KeyboardInterrupt as e:
         ngolos.handle_exit()

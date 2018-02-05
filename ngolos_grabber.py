@@ -282,10 +282,11 @@ class NGolosGrabber:
 
 			curr_match.goals += self.get_goals(curr_match.url)
 
-			info("[{}/40]{} {} {} at {} [{}] => {} videos found".format(
+			info("[{}/40]{} {} ({}) {} at {} [{}] => {} videos found".format(
 				self.MATCH_PROCESS_COUNTER,
 				curr_match.team1,
 				curr_match.score,
+				curr_match.penalty_score,
 				curr_match.team2,
 				curr_match.match_date,
 				curr_match.country,
@@ -304,7 +305,7 @@ class NGolosGrabber:
 		url = match.find("a")["href"]
 		url = "https://www.ngolos.com" + url
 
-		# if (url != "https://www.ngolos.com/videos/2018-01-28-indianapacers-orlandomagic"):
+		# if (url != "https://www.ngolos.com/videos/2018-01-27-vitriadesetbal-sporting"):
 		# 	return
 
 		if self.READ_FIRST_MATCH == url:
@@ -377,8 +378,10 @@ class NGolosGrabber:
 
 			if len(teams) == 3:
 					team1 = teams[0]
-					team2 = teams[2].replace("(", "")
-					penalty_score = teams[1]
+					team2 = teams[2].replace(")", "", 1)
+
+					scores = re.search("\d+-\d+", tokens[1])
+					penalty_score = scores.group(0)
 
 			elif len(teams) == 2:
 				team1 = teams[0]
@@ -427,7 +430,7 @@ class NGolosGrabber:
 			tks = competition.split("-")
 
 			if len(tks) > 1:
-					competition_phase = tks[1]
+					competition_phase = tks[1].strip()
 					competition = competition.replace("- {}".format(competition_phase), "")
 
 		else:
